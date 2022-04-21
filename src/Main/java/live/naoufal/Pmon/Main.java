@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.concurrent.*;
 
 
-
 public class Main {
 
     static DockerClientConfig dockerClientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder()
@@ -52,7 +51,6 @@ public class Main {
             }
         };
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(helloRunnable, 0, 30, TimeUnit.SECONDS);
-
+        executor.scheduleAtFixedRate(helloRunnable, 0, 5, TimeUnit.SECONDS);
     }
 }

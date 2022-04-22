@@ -12,6 +12,7 @@ import com.github.dockerjava.core.DockerClientImpl;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
 import com.github.dockerjava.transport.DockerHttpClient;
 
+import java.awt.*;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,6 @@ public class Main {
             .build();
     static DockerClient dockerClient = DockerClientImpl.getInstance(dockerClientConfig, dockerHttpClient);
 
-    //arraylist
     static List<String> containerNames = new ArrayList<>();
 
     public static Boolean healthy = false;
@@ -64,16 +64,19 @@ public class Main {
 //                webhookClient.send("**Message**");
                 String description;
                 String imageUrl;
+                int color = 0x00FF00;
                 if (healthyContainers().size() >= 1) {
                     description = healthyContainers() + "healthy :white_check_mark:";
                     imageUrl = "https://media.istockphoto.com/vectors/green-check-mark-icon-green-tick-symbol-round-checkmark-sign-vector-vector-id1159270056?k=20&m=1159270056&s=170667a&w=0&h=ewlZtL_NAF5L4dFRHxWLmNpZtnWyvxtDQ6BEPVrvlzw=";
                 } else {
+//                    description = "unhealthy :x: /containers/{7d948d91ab87}/restart";
+                    color = 0xFF0000;
                     description = "unhealthy :x:";
                     imageUrl = "https://media.istockphoto.com/vectors/design-of-red-wrong-mark-grunge-letter-xred-cross-sign-hand-drawn-vector-id1214857021?k=20&m=1214857021&s=612x612&w=0&h=vMllYNYlBX5rHw-5r0MS0gROSXokOcbQmGtvhVOWVEI=";
                 }
                 if (previous != healthyContainers().size()) {
                     WebhookEmbed embed = new WebhookEmbedBuilder()
-                            .setColor(65280)
+                            .setColor(color)
                             .setDescription(description)
                             .setImageUrl(imageUrl)
                             .build();
@@ -84,6 +87,6 @@ public class Main {
             }
         };
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(helloRunnable, 0, 5, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(helloRunnable, 0, 30, TimeUnit.SECONDS);
     }
 }
